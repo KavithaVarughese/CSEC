@@ -54,12 +54,12 @@ public class des {
 
 	}
 
-	private static long encrypt(InputStream is, OutputStream os) throws IOException {
+	private static void encrypt(InputStream is, OutputStream os) throws IOException {
 	long startTime = System.nanoTime();
 		// create CipherOutputStream to encrypt the data using encryptCipher
 		os = new CipherOutputStream(os, encryptCipher);
 		long endTime = System.nanoTime();
-		long totalTime = endTime - startTime();
+		long totalTime = endTime - startTime;
 		writeData(is, os);
 		System.out.println(totalTime);
 	}
