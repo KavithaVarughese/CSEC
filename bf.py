@@ -7,6 +7,7 @@ Encrypt or decrypt a file using Blowfish cipher.
 import argparse
 from getpass import getpass
 import os
+import time
 
 from Crypto.Cipher import Blowfish
 from Crypto import Random
@@ -82,6 +83,7 @@ if __name__ == "__main__":
                          help='write data to <outfile>')
     args = parser.parse_args()
 
+    starttime = time.time()
     with open(args.infile.name, 'rb') as f:
         outfile = open(args.outfile.name, 'wb')
         bs = Blowfish.block_size
@@ -106,5 +108,7 @@ if __name__ == "__main__":
             elif chunk and args.decrypt:
                 outfile.write(bfcrypt.decrypt(chunk))
             else:
-                print('done')
+                endtime = time.time()
+                p = endtime - starttime
+                print(p)
                 break
