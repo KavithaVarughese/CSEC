@@ -23,13 +23,11 @@ for filenames in os.listdir('files/XML'):
 
 
     # get string to run OS command for des
-    string = 'java des files/XML/'+filenames+' out2'
-   
-    ################## THIS PART HAS TO BE LOOKED INTO ###########################################################
+    string = 'files/XML/'+filenames
 
     # storing DES encryption time in variable DESTime
     # calling java program
-    javaout = subprocess.Popen(['java','des', '../test.xml', '../encxml'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    javaout = subprocess.Popen(['java','des',string, '../encxml'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout,stderr = javaout.communicate();
     stdout = str(stdout)
     #obtaining digits from the byte format of the returned value
@@ -38,11 +36,6 @@ for filenames in os.listdir('files/XML'):
         if c.isdigit():
             DESTime=DESTime+c   
 
-    print("Value in above code:"+DESTime)
-    print("value according to previous code")
-    os.system(string)
-
-    #################################################################################################################
     #Add to table
     table.add_row(["XML",size,DESTime, BFTime])
     size=size+10
@@ -60,12 +53,20 @@ for filenames in os.listdir('files/MP4'):
     with open('bfval.txt') as f:
         BFTime = f.readline()
 
-
     # get string to run OS command for des
-    string = 'java des files/MP4/'+filenames+' out2'
-    #store time in DESTime
-    os.system(string)
-    DESTime = 120
+    string = 'files/MP4/'+filenames
+
+    # storing DES encryption time in variable DESTime
+    # calling java program
+    javaout = subprocess.Popen(['java','des',string, '../encxml'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    stdout,stderr = javaout.communicate();
+    stdout = str(stdout)
+    #obtaining digits from the byte format of the returned value
+    DESTime = ''
+    for c in stdout:
+        if c.isdigit():
+            DESTime=DESTime+c   
+
     #Add to table
     table.add_row(["MP4",size,DESTime, BFTime])
     size=size+10
