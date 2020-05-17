@@ -8,7 +8,7 @@ print(x)
 # storing DES encryption time in variable javatime
 # calling java program
 javaout = subprocess.Popen(['java','des', '../test.xml', '../encxml'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-stdout,stderr = out.communicate();
+stdout,stderr = javaout.communicate();
 stdout = str(stdout)
 #obtaining digits from the byte format of the returned value
 javatime = ''
