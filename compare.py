@@ -17,7 +17,11 @@ for filenames in os.listdir('files/XML'):
     #get the time for blowfish 
     # store in BFTIME
     os.system(string)
-    BFTime = 120
+
+    with open('bfval.txt') as f:
+        BFTime = f.readline()
+
+
     # get string to run OS command for des
     string = 'java des files/XML/'+filenames+' out2'
    
@@ -52,7 +56,11 @@ for filenames in os.listdir('files/MP4'):
     #get the time for blowfish 
     # store in BFTIME
     os.system(string)
-    BFTime = 120
+    
+    with open('bfval.txt') as f:
+        BFTime = f.readline()
+
+
     # get string to run OS command for des
     string = 'java des files/MP4/'+filenames+' out2'
     #store time in DESTime

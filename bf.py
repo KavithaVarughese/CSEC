@@ -83,7 +83,7 @@ if __name__ == "__main__":
                          help='write data to <outfile>')
     args = parser.parse_args()
 
-    starttime = time.time()
+    
     with open(args.infile.name, 'rb') as f:
         outfile = open(args.outfile.name, 'wb')
         bs = Blowfish.block_size
@@ -101,6 +101,7 @@ if __name__ == "__main__":
             outfile.write(bfcrypt.encrypt(chunk, first_part=True))
 
         # Process the rest of the file chunk by chunk.
+        starttime = time.time()*1000000000
         while True:
             chunk = f.read(chunk_size)
             if chunk and args.encrypt:
@@ -108,7 +109,11 @@ if __name__ == "__main__":
             elif chunk and args.decrypt:
                 outfile.write(bfcrypt.decrypt(chunk))
             else:
-                endtime = time.time()
+                endtime = time.time()*1000000000
                 p = endtime - starttime
-                print(p)
+
+                # wrtite the time taken into a file
+                foo = open("bfval.txt","w")
+                foo.write(str(p))
+                foo.close
                 break
