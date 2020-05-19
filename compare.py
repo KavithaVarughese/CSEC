@@ -1,76 +1,49 @@
 import os
 import subprocess
+import sys
 
-#table 
+#table
 from prettytable import PrettyTable
+
+#split encryption and decryption time
+def splitTime (output):
+    times = (output.decode('utf-8')).splitlines()
+    return times
 
 #looping through the files to print in table format
 table = PrettyTable()
-table.field_names = ["File Type", "File size", "DES Time", "Blowfish Time"]
+table.field_names = ["File Type", "File size", "DES Encryption Time", "DES Decryption Time", "Blowfish Encryption Time", "Blowfish Decryption Time"]
 
+for filename in os.listdir('../encfiles'):
+    file_stat = os.stat('../encfiles/'+filename)
+    filesize = str(round(file_stat.st_size/(1024*1024),3))+"MB"
+    #file extension
+    file_extension = filename.split('.')
 
-#FOR XML FILES
-size = 10
-for filenames in os.listdir('files/XML'):
     #Get the string for OS command for blow fish
-    string = 'python bf.py -e files/XML/'+filenames+' out1'
-    #get the time for blowfish 
-    # store in BFTIME
-    os.system(string)
-
-    with open('bfval.txt') as f:
-        BFTime = f.readline()
+    string = '../encfiles/'+filename
 
 
-    # get string to run OS command for des
-    string = 'files/XML/'+filenames
-
-    # storing DES encryption time in variable DESTime
+    # storing Blowfish encryption time in variable BFTime
     # calling java program
-    javaout = subprocess.Popen(['java','des',string, '../encxml'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    # javaout = subprocess.Popen(['javac','Blowfish.java'])
+    javaout = subprocess.Popen(['java','Blowfish',string, 'out1','out2'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout,stderr = javaout.communicate();
-    stdout = str(stdout)
     #obtaining digits from the byte format of the returned value
-    DESTime = ''
-    for c in stdout:
-        if c.isdigit():
-            DESTime=DESTime+c   
+    times = splitTime(stdout)
+    BFEncryptionTime = times[0]
+    BFDecryptionTime = times[1]
+
+    #storing DES encryption and decryption times
+    # javaout = subprocess.Popen(['javac','des.java'])
+    javaout = subprocess.Popen(['java','des',string, 'out1','out2'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    stdout,stderr = javaout.communicate();
+    #obtaining digits from the byte format of the returned value
+    times = splitTime(stdout)
+    DESEncryptionTime = times[0]
+    DESDecryptionTime = times[1]
 
     #Add to table
-    table.add_row(["XML",size,DESTime, BFTime])
-    size=size+10
-
-
-#MP4 files
-size = 10
-for filenames in os.listdir('files/MP4'):
-    #Get the string for OS command for blow fish
-    string = 'python bf.py -e files/MP4/'+filenames+' out1'
-    #get the time for blowfish 
-    # store in BFTIME
-    os.system(string)
-    
-    with open('bfval.txt') as f:
-        BFTime = f.readline()
-
-    # get string to run OS command for des
-    string = 'files/MP4/'+filenames
-
-    # storing DES encryption time in variable DESTime
-    # calling java program
-    javaout = subprocess.Popen(['java','des',string, '../encxml'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    stdout,stderr = javaout.communicate();
-    stdout = str(stdout)
-    #obtaining digits from the byte format of the returned value
-    DESTime = ''
-    for c in stdout:
-        if c.isdigit():
-            DESTime=DESTime+c   
-
-    #Add to table
-    table.add_row(["MP4",size,DESTime, BFTime])
-    size=size+10
-
+    table.add_row([file_extension[1], filesize, DESEncryptionTime, DESDecryptionTime, BFEncryptionTime, BFDecryptionTime])
 
 print(table)
-
