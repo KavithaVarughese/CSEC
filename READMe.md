@@ -13,5 +13,5 @@
         mkfile <size> <filaname>
         eg. mkfile 10M 001.xml
     
- Output of compare.py
+4.Output of compare.py
  ![Comparison of DES and Blowfish Encryption and Decryption](Output.png)
