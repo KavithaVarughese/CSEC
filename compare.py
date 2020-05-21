@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import operator
 
 #table
 from prettytable import PrettyTable
@@ -26,7 +27,7 @@ for filename in os.listdir('../encfiles'):
 
     # storing Blowfish encryption time in variable BFTime
     # calling java program
-    # javaout = subprocess.Popen(['javac','Blowfish.java'])
+    javaout = subprocess.Popen(['javac','Blowfish.java'])
     javaout = subprocess.Popen(['java','Blowfish',string, 'out1','out2'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout,stderr = javaout.communicate();
     #obtaining digits from the byte format of the returned value
@@ -35,7 +36,7 @@ for filename in os.listdir('../encfiles'):
     BFDecryptionTime = times[1]
 
     #storing DES encryption and decryption times
-    # javaout = subprocess.Popen(['javac','des.java'])
+    javaout = subprocess.Popen(['javac','des.java'])
     javaout = subprocess.Popen(['java','des',string, 'out1','out2'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout,stderr = javaout.communicate();
     #obtaining digits from the byte format of the returned value
@@ -46,4 +47,4 @@ for filename in os.listdir('../encfiles'):
     #Add to table
     table.add_row([file_extension[1], filesize, DESEncryptionTime, DESDecryptionTime, BFEncryptionTime, BFDecryptionTime])
 
-print(table)
+print(table.get_string(sort_key=operator.itemgetter(1, 0), sortby="File size"))
