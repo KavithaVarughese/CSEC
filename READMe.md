@@ -6,12 +6,14 @@
     Here, the key is not automatically generated, so hardcoded "This is the key .."
 
 2. Found Java implementation of DES but has a key generator from https://www.journaldev.com/1309/java-des-algorithm-program
-    Disabled decrypyion 
+    Disabled decryption 
     Added Code for convenient command line arguments
 
-3. Made dummy files with
+3. Found JAVA implementation of Blowfish.
+    Enabled encryption and decryption commands in both DES and Blowfish codes
+4. Made dummy files with
         mkfile <size> <filaname>
         eg. mkfile 10M 001.xml
     
-4.Output of compare.py
+5.Output of compare.py
  ![Comparison of DES and Blowfish Encryption and Decryption](Output.png)
