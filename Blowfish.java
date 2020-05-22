@@ -49,20 +49,24 @@ class Blowfish
 
         long startTime = System.nanoTime();
         // create CipherOutputStream to encrypt the data using encryptCipher
+        //CipherOutputStream c
         os = new CipherOutputStream(os, encryptCipher);
-        long endTime = System.nanoTime();
-        long totalTime = endTime - startTime;
+        
         writeData(is, os);
+        long endTime = System.nanoTime();
+        long totalTime = (endTime - startTime)/1000000;
         System.out.println(totalTime);
 
     }
     public static void blowfishDecrypt(InputStream is, OutputStream os) throws IOException {
 
         long startTime = System.nanoTime();
+        //CipherInputStream c
         is = new CipherInputStream(is, decryptCipher);
+        writeData(is,os);
+        //writeDecryptData(cis, os);
         long endTime = System.nanoTime();
-        long totalTime = endTime - startTime;
-        writeData(is, os);
+        long totalTime = (endTime - startTime)/1000000;
         System.out.println(totalTime);
     }
     // utility method to read data from input stream and write to output stream
@@ -76,4 +80,14 @@ class Blowfish
         os.close();
         is.close();
     }
+    /*private static void writeDecryptData(CipherInputStream is, OutputStream os) throws IOException {
+        byte[] buf = new byte[1024];
+        int numRead = 0;
+        // read and write operation
+        while ((numRead = is.read(buf)) >= 0) {
+            os.write(buf, 0, numRead);
+        }
+        os.close();
+        is.close();
+    }*/
 }
