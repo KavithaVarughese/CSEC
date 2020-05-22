@@ -57,9 +57,9 @@ public class des {
         long startTime = System.nanoTime();
         // create CipherOutputStream to encrypt the data using encryptCipher
         os = new CipherOutputStream(os, encryptCipher);
-        long endTime = System.nanoTime();
-        long totalTime = endTime - startTime;
-        writeData(is, os);
+		writeData(is, os);
+		long endTime = System.nanoTime();
+        long totalTime = (endTime - startTime) / 1000000;
         System.out.println(totalTime);
     }
 
@@ -68,9 +68,9 @@ public class des {
         long startTime = System.nanoTime();
         // create CipherOutputStream to decrypt the data using decryptCipher
         is = new CipherInputStream(is, decryptCipher);
-        long endTime = System.nanoTime();
-        long totalTime = endTime - startTime;
-        writeData(is, os);
+		writeData(is, os);
+		long endTime = System.nanoTime();
+        long totalTime = (endTime - startTime) / 1000000;
         System.out.println(totalTime);
     }
 
