@@ -18,17 +18,17 @@ def splitTime (output):
 table = pd.DataFrame(columns= ["File_Type", "File size", "DES Encryption Time", "DES Decryption Time", "Blowfish Encryption Time", "Blowfish Decryption Time"])
 
 #sorting the files folder list
-listfiles = os.listdir('../encfiles')
+listfiles = os.listdir('encfiles')
 listfiles.sort()
 
 for filename in listfiles:
-    file_stat = os.stat('../encfiles/'+filename)
+    file_stat = os.stat('encfiles/'+filename)
     filesize = str(round(file_stat.st_size/(1024*1024),3))+"MB"
     #file extension
     file_extension = filename.split('.')
 
     #Get the string for OS command for blow fish
-    string = '../encfiles/'+filename
+    string = 'encfiles/'+filename
 
 
     # storing Blowfish encryption time in variable BFTime
@@ -106,3 +106,18 @@ table[table.File_Type == 'mp3'].plot(kind='line',x='File size',y='Blowfish Decry
 
 plt.show()
 
+ax = plt.gca()
+
+table[table.File_Type == 'xml'].plot(kind='line',x='File size',y='DES Encryption Time',ax=ax,title='Encryption Time vs File Size Graph for All Files', marker = 'o', label ='xml')
+table[table.File_Type == 'mp4'].plot(kind='line',x='File size',y='DES Encryption Time', color='red', ax=ax, marker = 'o', label='mp4')
+table[table.File_Type == 'mp3'].plot(kind='line',x='File size',y='DES Encryption Time', color='green', ax=ax, marker = 'o',label='mp3')
+
+plt.show()
+
+ax = plt.gca()
+
+table[table.File_Type == 'xml'].plot(kind='line',x='File size',y='Blowfish Encryption Time',ax=ax,title='Encryption Time vs File Size Graph for All Files', marker = 'o', label ='xml')
+table[table.File_Type == 'mp4'].plot(kind='line',x='File size',y='Blowfish Encryption Time', color='red', ax=ax, marker = 'o', label='mp4')
+table[table.File_Type == 'mp3'].plot(kind='line',x='File size',y='Blowfish Encryption Time', color='green', ax=ax, marker = 'o',label='mp3')
+
+plt.show()
